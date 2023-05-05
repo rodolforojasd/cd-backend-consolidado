@@ -1,5 +1,4 @@
 
-import createInventory from "./helper/CreateInventory.js";
 import crypto from 'crypto'
 import fs from 'fs/promises'
 
@@ -29,45 +28,57 @@ class Product {
     }
 }
 
+
 class ProductManager {
 
 
     constructor() {
         
         this.products = []
-        this.path='./data/products.json'
+        this.path={products:'../data/products.json', titleSorted:'./data/sortedProducts.json'}
+        this.sortedProducts=[]
     }
     async createPath(){
-        await fs.appendFile(this.path,'[]',"utf-8")
+        
+        await fs.appendFile(this.path.products,'[]',"utf-8")
+        await fs.appendFile(this.path.titleSorted,'{}','utf-8')
     } 
 
     async loadProducts(){
-    
-        let  inJSON = await fs.readFile(this.path)
+        let  inJSON = await fs.readFile(this.path.products)
         let data = await JSON.parse(inJSON)
         this.products = data
         }
     
-    
-    async saveProducts(products){
-        
-        let data = this.products
-        debugger
-        let inJSON =  JSON.stringify(data, null,'\t')
-        fs.writeFile(this.path,inJSON)
-
+    async loadSortedProducts(){
+        let  inJSON = await fs.readFile(this.path[1])
+        let data = await JSON.parse(inJSON)
+        this.sortedProducts = data
     }
 
+    async saveProducts(){
+        let data = this.products
+        let inJSON =  JSON.stringify(data, null,'\t')
+        fs.writeFile(this.path.products,inJSON)
+    }
+
+    async saveSortedProducts(){
+        let data = this.sortedProducts
+        let inJSON =  JSON.stringify(data, null,'\t')
+        fs.writeFile(this.path[1],inJSON)
+    }
+
+    
+    
+
     async getProducts() {
-    debugger
         await this.loadProducts()
-        return this.products
-        
+        return this.products    
     }
 
     async getProductById(id) {
         await this.loadProducts()
-        const searched = this.products.find(product => product.id === id)
+        const searched = this.products[id-1]
         if (!searched) {
             throw new Error('product not found')
         }
@@ -76,16 +87,17 @@ class ProductManager {
     }
 
     async addProduct(title,description,abv,price,stock,category,thumbnail,db){
-    
+        this.loadSortedProducts()
         
-        this.loadProducts()
         let id = null
-        
+                                                                                  
         if(this.products.some((product)=> product.title===title||this.products.some((product)=> product.id===id))){
             console.log(title)
             throw new Error (`el producto "${title}" ya existe`)  
         }
         
+        this.loadProducts()
+
         if(this.products.length > 0){
             id = this.products.length + 1
             let product = new Product (id,crypto.randomUUID(), title, description, abv, price, true, stock, category, thumbnail,db)
@@ -113,6 +125,11 @@ class ProductManager {
         return newProduct
     }
 
+    sortProducts(){
+
+        this.products
+       
+    }
     async deleteProductById(id) {
        await this.loadProducts()
         const indexSearched = this.products.findIndex(p => p.id === id)
@@ -149,3 +166,4 @@ const productManager= new ProductManager
 console.log(productManager.getProducts)
 
 
+export default ProductManager
