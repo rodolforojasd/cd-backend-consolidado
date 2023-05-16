@@ -4,7 +4,7 @@ import fs from 'fs/promises'
 
 
 class Product {
-    constructor( id,code, title, description, abv, price, status, stock, category, thumbnail, db) {
+    constructor( id,code, title, description, abv, price, status, stock, category, thumbnail, db, createdAt) {
        
         if (!title) throw new Error('falta un argumento title')
         if (!description) throw new Error('falta un argumento')
@@ -24,6 +24,7 @@ class Product {
         this.category=category
         this.thumbnail=thumbnail
         this.db=db
+        this.createdAt=createdAt
 
     }
 }
@@ -87,7 +88,7 @@ class ProductManager {
     }
 
     async addProduct(title,description,abv,price,stock,category,thumbnail,db){
-        this.loadSortedProducts()
+        this.loadProducts()
         
         let id = null
                                                                                   
@@ -100,13 +101,13 @@ class ProductManager {
 
         if(this.products.length > 0){
             id = this.products.length + 1
-            let product = new Product (id,crypto.randomUUID(), title, description, abv, price, true, stock, category, thumbnail,db)
+            let product = new Product (id,crypto.randomUUID(), title, description, abv, price, true, stock, category, thumbnail,db, Date.now())
             this.products.push(product)
         }
 
         if(this.products.length === 0){
             id = 1
-            let  product = new Product ( id,crypto.randomUUID(), title, description,abv, price, true, stock, category, thumbnail,db)
+            let  product = new Product ( id,crypto.randomUUID(), title, description,abv, price, true, stock, category, thumbnail,db, Date.now())
             this.products.push(product) 
         }
         console.log(this.products)
