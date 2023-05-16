@@ -1,6 +1,6 @@
 import express from 'express';
-import ProductManager from '../ProductManager/ProductManager';
-const  productManager = new ProductManager
+import {productManager} from '../ProductManager/ProductManager.js';
+
 
  const productsRouter = express.Router();
 
@@ -14,12 +14,9 @@ const  productManager = new ProductManager
 //     next()
 //  })
 
- productsRouter.get("/products",(req,res,next)=>{
-   res.send()
-    next()
- })
 
- productsRouter.get('/products',async(req,res)=>{
+
+ productsRouter.get('/',async(req,res)=>{
     
     let limit = req.query.limit 
     let  products = await productManager.getProducts()
@@ -50,6 +47,7 @@ productsRouter.get('/:category', async (req,res)=>{
 })
 
 productsRouter.post("/", (req,res)=> {
+    debugger
     const product = req.body
     productManager.addProduct(req.body)
     

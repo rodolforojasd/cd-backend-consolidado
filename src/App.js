@@ -1,6 +1,7 @@
 
 import express from "express"
-import {productsRouter} from "./routes/products.router.js"
+import productsRouter from "./routes/products.router.js"
+import cartsRouter from "./routes/carts.router.js"
 
 
 const PORT = 8080
@@ -13,4 +14,4 @@ app.use(express.static("public"))
 app.listen(PORT,()=>console.log('Port 8080 is up!'))
 
 app.use("/products", productsRouter)
-app.use("cart/",cartRouter)
+app.use("/carts",cartsRouter)

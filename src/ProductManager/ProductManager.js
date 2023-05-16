@@ -73,6 +73,7 @@ class ProductManager {
     
 
     async getProducts() {
+        debugger
         await this.loadProducts()
         return this.products    
     }
@@ -163,8 +164,8 @@ class ProductManager {
     }
 }
 
-const productManager= new ProductManager
-console.log(productManager.getProducts)
+export const productManager= new ProductManager
+
+console.log(productManager.getProducts())
 
 
-export default ProductManager

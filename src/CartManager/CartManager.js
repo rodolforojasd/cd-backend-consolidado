@@ -1,12 +1,9 @@
 import {Cart} from './Cart.js'
-// import {UserManager} from '../UserManager/UserManager.js'
-import { Product } from '../ProductManager/Product.js'
 import fs from "fs/promises"
-//HACER LA ACTIVIDAD OLVIDANDO EL LOCAL STORAGE O MEZCLANDOLO JUNTO CON EL FILE MANAGER SYSTEM 
-//TE FALTAN TODOS LOS ENDPOINTS DEL CARRITO Y EL MIDDLEWARE THE LA ACTIVIDAD
 
 
-export class CartManager {
+
+ class CartManager {
 
 
     constructor() {
@@ -16,6 +13,7 @@ export class CartManager {
 
 
     async loadCarts(){
+    debugger
         let  inJSON = await fs.readFile(this.path)
         let data = await JSON.parse(inJSON)
         this.carts = data
@@ -30,11 +28,15 @@ export class CartManager {
 
 
 
-     getCarts() {
+     async getCarts() {
+     debugger
+        await this.loadCarts()
+        console.log(this.carts)
         return this.carts
     }
 
     async addCart(){
+        debugger
         await this.loadCarts()
         let id = 0   
         if(this.carts.length === 0){
@@ -48,7 +50,7 @@ export class CartManager {
             this.carts.push(cart) 
         }
         
-        this.saveProducts()
+        this.saveCarts()
     }
 
     
@@ -200,4 +202,4 @@ export class CartManager {
     }
 }
 
-export default CartManager
+export const cartManager =  new CartManager
