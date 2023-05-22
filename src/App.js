@@ -4,14 +4,17 @@ import productsRouter from "./routes/products.router.js"
 import cartsRouter from "./routes/carts.router.js"
 
 
+
 const PORT = 8080
 
 const app = express()
+
 app.use(express.urlencoded({extended:true}))
+
 app.use(express.static("public"))
 
-
-app.listen(PORT,()=>console.log('Port 8080 is up!'))
+app.listen(PORT,()=>console.log(`Listening http://localhost:${PORT}`))
 
 app.use("/products", productsRouter)
+
 app.use("/carts",cartsRouter)

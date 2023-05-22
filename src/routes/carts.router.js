@@ -1,5 +1,6 @@
 import express from 'express';
 import {cartManager} from '../CartManager/CartManager.js'
+import { productManager } from '../ProductManager/ProductManager.js';
  const cartsRouter = express.Router();
 
 
@@ -7,10 +8,10 @@ import {cartManager} from '../CartManager/CartManager.js'
  cartsRouter.post("/", async (req,res)=> {
    debugger
     await cartManager.addCart()
-    
-    res
-    .status(204)
-    .json({status:"success",msg:"send cart products", data: cartManager.carts})
+    const carts = cartManager.carts
+    return res.status(200).json(
+      {status:"success", msg:"send carts ", data: carts }
+      )
 
  })
 
@@ -21,7 +22,7 @@ import {cartManager} from '../CartManager/CartManager.js'
      try{
         const cart = await cartManager.getCartById(id)
         return res
-        .status(204)
+        .status(200)
         .json({status:"success",msg:"send cart products", data: cart.products})
  
      }catch(e){
@@ -33,13 +34,13 @@ import {cartManager} from '../CartManager/CartManager.js'
  })
  
  cartsRouter.post("/:cid/product/:pid", async (req,res)=> {
-    const productId = req.params.pid
-    const cartId = req.params.cid
+    const productId = parseInt(req.params.pid)
+    const cartId = parseInt(req.params.cid)
     try{
-        await cartManager.addToCart(cartId,productId,productManager)
+        const cartCounter = await cartManager.addToCart(cartId,productId,productManager)
         return res
-        .status(204)
-        .json({status:"success",msg:"product added", data: this.carts[cartId-1].products})
+        .status(200)
+        .json({status:"success",msg:"product added", data: {cartId:cartId, cartItems: cartCounter}})
 
     }catch(e){
         return res

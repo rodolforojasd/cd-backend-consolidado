@@ -89,7 +89,7 @@ class ProductManager {
     }
 
     async addProduct(title,description,abv,price,stock,category,thumbnail,db){
-        this.loadProducts()
+        await this.loadProducts()
         
         let id = null
                                                                                   
@@ -98,7 +98,7 @@ class ProductManager {
             throw new Error (`el producto "${title}" ya existe`)  
         }
         
-        this.loadProducts()
+       
 
         if(this.products.length > 0){
             id = this.products.length + 1
@@ -118,7 +118,7 @@ class ProductManager {
     async updateProduct(id, newProduct) {
        await  this.loadProducts()
 
-        const indexSearched = this.products.findIndex(product => product.id === id)
+        const indexSearched = this.products.findIndex(product => product.id == id)
         if (indexSearched === -1) {
             throw new Error('product not found')
         }
@@ -134,28 +134,31 @@ class ProductManager {
     }
     async deleteProductById(id) {
        await this.loadProducts()
-        const indexSearched = this.products.findIndex(p => p.id === id)
+       const indexSearched = this.products.findIndex(p => p.id === id)
+       const deleted = this.products[indexSearched]
         
         if (indexSearched === -1) {
 
             throw new Error('product not found')
 
         }else if(indexSearched === this.products[this.products.length-1]) {
-
+             
              this.products.pop()
              this.saveProducts()
+             return deleted
 
-        }else if (indexSearched===0){
+        }else if (indexSearched === 0){
 
             this.products.shift()
             const idUpdated = this.products.map((p)=> p.id = p.id -1)
             this.products = idUpdated
             this.saveProducts()
+            return deleted
 
         }else{
 
-            const [deleted] = this.products.splice(indexSearched, 1)
-            const idUpdated= this.products.map((p)=> p.id > indexSearched+1 ? p.id = p.id -1: p.id = p.id)
+            [deleted] = this.products.splice(indexSearched, 1)
+            const idUpdated= this.products.map((p)=> p.id > indexSearched + 1 ? p.id = p.id -1: p.id = p.id)
             this.products = idUpdated
             this.saveProducts()
             return deleted

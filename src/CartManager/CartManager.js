@@ -56,7 +56,7 @@ import fs from "fs/promises"
     
     async getCartById(id) {
         await this.loadCarts()
-        const searched = this.carts.find(c => c.id === id)
+        const searched = this.carts.find(c => c.id == id)
         if (!searched) {
             throw new Error('id no encontrado')
         }
@@ -65,14 +65,14 @@ import fs from "fs/promises"
 
     async getCartProductById(id, productId) {
         let cart= await this.getCartById(id)
-        const searched = cart.products.find(product => product.id === id)
+        const searched = cart.products.find(p => p.id === productId)
         if (!searched) {
             throw new Error('product not found')
         }
         return searched
     }
 
-    async countCartItems(){
+    async countCartItems(id){
   
         let cart = await getCartById(id)
         let cartCounter= 0
@@ -104,9 +104,9 @@ import fs from "fs/promises"
         const productToAdd = await pm.getProductById(productId)
         let stock = productToAdd.stock
 
-        newCart = await this.getCartById(id)
+        const newCart = await this.getCartById(id)
 
-        const inCart = newCart.products.findIndex(p => p.id === productId)
+        const inCart = newCart.products.findIndex(p => p.id === productToAdd.id)
         
         if(inCart === -1){
             const newProduct= {id: productToAdd.id, quantity: quantity }
@@ -119,7 +119,7 @@ import fs from "fs/promises"
         }
 
         this.saveCarts()
-        cartCounter = this.countCartItems()
+        cartCounter = this.countCartItems(id)
     
         return cartCounter
    }
