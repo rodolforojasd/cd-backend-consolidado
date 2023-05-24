@@ -1,19 +1,18 @@
 <div>
   <h2>{{title}}</h2>
-  <p>{{golesBoca}}</p>
-  <p>{{hora}}</p>
-  <p>{{dolar}}</p>
-  {{#each productos}}
+  
+  {{#each products}}
     <p>
       id:
       {{this.id}}
-      name:
-      {{this.name}}
-      price:
+      nombre:
+      {{this.title}}
+      precio:
       {{this.price}}
-      createdAt:
-      {{this.createdAt}}
+      categoría:
+      {{this.category}}
     </p>
     <hr />
   {{/each}}
 </div>
+

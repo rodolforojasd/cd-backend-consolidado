@@ -1,7 +1,7 @@
 import express from "express";
 
-export const testSocketRouter = express.Router();
+export const socketRouter = express.Router();
 
-testSocketRouter.get("/", (req, res) => {
+socketRouter.get("/", (req, res) => {
   return res.status(200).render("test-socket", {});
 });

@@ -1,15 +1,14 @@
 import express from "express";
-import { productos } from "../utils.js";
+import { productManager } from "../ProductManager/ProductManager";
 
-export const testPlantillaProducts = express.Router();
+const products = productManager.getProducts()
 
-testPlantillaProducts.get("/", (req, res) => {
-  const title = "Un hermoso titulo que hable sobre boquita!";
-  return res.status(200).render("test-plantilla-products", {
+export const templateProducts = express.Router();
+
+templateProducts.get("/", (req, res) => {
+  const title = "Bienvenido a Unión Licorera!";
+  return res.status(200).render("template.products", {
     title,
-    productos,
-    hora: Date.now(),
-    dolar: Math.random() * 100 + 400,
-    golesBoca: 2,
-  });
-});
+    products,
+  })
+})

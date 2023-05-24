@@ -37,6 +37,7 @@
     "function-bind": "^1.1.1",
     "get-intrinsic": "^1.2.0",
     "glob-parent": "^5.1.2",
+    "handlebars": "^4.7.7",
     "has": "^1.0.3",
     "has-flag": "^3.0.0",
     "has-symbols": "^1.0.3",
@@ -81,6 +82,7 @@
     "setprototypeof": "^1.2.0",
     "side-channel": "^1.0.4",
     "simple-update-notifier": "^1.1.0",
+    "socket.io": "^4.6.1",
     "statuses": "^2.0.1",
     "supports-color": "^5.5.0",
     "to-regex-range": "^5.0.1",
@@ -90,7 +92,8 @@
     "undefsafe": "^2.0.5",
     "unpipe": "^1.0.0",
     "utils-merge": "^1.0.1",
-    "vary": "^1.1.2"
+    "vary": "^1.1.2",
+    "websocket": "^1.0.34"
   },
   "scripts": {
     "start": "node .",
