@@ -3,12 +3,13 @@ import express from "express"
 import productsRouter from "./routes/products.router.js"
 import cartsRouter from "./routes/carts.router.js"
 import handlebars from "express-handlebars"
-import path from "path"
+import path, { dirname } from "path"
 import { __dirname } from "./utils.js"
 import { Server } from "socket.io"
-import { templateProducts } from "./routes/template.products.router.js"
+import { templateRouter } from "./routes/template.router.js"
 import { socketRouter } from "./routes/socket.router.js"
 
+console.log(__dirname)
 const PORT = 8080
 
 const app = express()
@@ -16,8 +17,6 @@ const app = express()
 app.use(express.urlencoded({extended:true}))
 
 app.use(express.static("public"))
-
-app.listen(PORT,()=>console.log(`Listening http://localhost:${PORT}`))
 
 app.engine("handlebars", handlebars.engine())
 
@@ -51,7 +50,7 @@ app.use("/products", productsRouter)
 app.use("/carts",cartsRouter)
 
 
-app.use("/template-products", templateProducts)
+app.use("/template-products", templateRouter)
 
 
 app.use("/test-socket", socketRouter)

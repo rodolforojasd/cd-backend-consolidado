@@ -1,11 +1,12 @@
 import express from "express";
-import { productManager } from "../ProductManager/ProductManager";
+import { productManager } from "../ProductManager/ProductManager.js";
 
-const products = productManager.getProducts()
+
 
 export const templateProducts = express.Router();
 
-templateProducts.get("/", (req, res) => {
+templateProducts.get("/", async  (req, res) => {
+  const products = productManager.getProducts()
   const title = "Bienvenido a Unión Licorera!";
   return res.status(200).render("template.products", {
     title,

@@ -1,6 +1,6 @@
 import express from 'express';
 import {productManager} from '../ProductManager/ProductManager.js';
-import  upload  from "../../utils/utils.js"
+import  uploader  from "../utils.js"
 
  const productsRouter = express.Router();
 
@@ -46,7 +46,7 @@ productsRouter.get('/:category', async (req,res)=>{
         (filtered)? res.status(202).send({filtered}): res.status(404).send({error:"category not found"})
 })
 
-productsRouter.post("/", upload.single("file"), async (req,res)=> {
+productsRouter.post("/", uploader.single("file"), async (req,res)=> {
     if(!req.file){
         return res.status(404).json({
             status:"error",

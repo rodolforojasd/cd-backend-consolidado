@@ -111,7 +111,7 @@ class ProductManager {
             let  product = new Product ( id,crypto.randomUUID(), title, description,abv, price, true, stock, category, thumbnail,db, Date.now())
             this.products.push(product) 
         }
-        console.log(this.products)
+        
         this.saveProducts()
     }
 
