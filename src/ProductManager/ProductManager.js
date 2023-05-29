@@ -36,7 +36,7 @@ class ProductManager {
     constructor() {
         
         this.products = []
-        this.path={products:'../data/products.json', titleSorted:'./data/sortedProducts.json'}
+        this.path={products:'./data/products.json', titleSorted:'./data/sortedProducts.json'}
         this.sortedProducts=[]
     }
     async createPath(){
@@ -133,9 +133,11 @@ class ProductManager {
        
     }
     async deleteProductById(id) {
+    debugger  
        await this.loadProducts()
        const indexSearched = this.products.findIndex(p => p.id === id)
-       const deleted = this.products[indexSearched]
+       let deleted = this.products[indexSearched]
+       
         
         if (indexSearched === -1) {
 
@@ -150,16 +152,35 @@ class ProductManager {
         }else if (indexSearched === 0){
 
             this.products.shift()
-            const idUpdated = this.products.map((p)=> p.id = p.id -1)
-            this.products = idUpdated
+            const updated =[]
+            this.products.forEach((p)=>{
+                if(p.id > indexSearched){
+                    p.id = p.id-1
+                    updated.push(p)
+                }else{
+                    p.id= p.id
+                    updated.push(p)
+                }
+                
+            })
+            this.products = updated
             this.saveProducts()
             return deleted
 
         }else{
-
+           
             [deleted] = this.products.splice(indexSearched, 1)
-            const idUpdated= this.products.map((p)=> p.id > indexSearched + 1 ? p.id = p.id -1: p.id = p.id)
-            this.products = idUpdated
+            const updated = []
+
+            this.products.forEach((p)=> {
+                if(p.id >= indexSearched + 1){
+                   p.id = p.id-1
+                }else{
+                    p.id = p.id
+                }
+                updated.push(p)
+            })
+            this.products = updated
             this.saveProducts()
             return deleted
         }
@@ -169,6 +190,7 @@ class ProductManager {
 
 export const productManager= new ProductManager
 
-console.log(productManager.getProducts())
 
 
+
+productManager.deleteProductById(1)
