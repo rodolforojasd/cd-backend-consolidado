@@ -8,7 +8,7 @@ import fs from "fs/promises"
 
     constructor() {
         this.carts = []
-        this.path = '../data/carts.json'
+        this.path = './data/carts.json'
     }
 
 
@@ -74,7 +74,7 @@ import fs from "fs/promises"
 
     async countCartItems(id){
   
-        let cart = await getCartById(id)
+        let cart = await this.getCartById(id)
         let cartCounter= 0
         if(cart.products.length > 0){
              cartCounter = cart.products.reduce(

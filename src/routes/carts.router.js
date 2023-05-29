@@ -17,10 +17,10 @@ import { productManager } from '../ProductManager/ProductManager.js';
 
 
   cartsRouter.get("/:cid", async (req,res)=> {
-    const id = req.params.id
+    const id = req.params.cid
     
      try{
-        const cart = await cartManager.getCartById(id)
+        const cart = await cartManager.getCartById(cid)
         return res
         .status(200)
         .json({status:"success",msg:"send cart products", data: cart.products})

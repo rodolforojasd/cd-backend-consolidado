@@ -55,7 +55,7 @@ productsRouter.post("/", uploader.single("file"), async (req,res)=> {
         })
     }
     try{
-        productManager.addProduct(...req.body)
+       const {title,description,abv,price,category,thumbnails,db} = req.body
         const  productAdded = productManager.getProducts()[productManager.products.lenght-1]
         return res
         .status(200)
