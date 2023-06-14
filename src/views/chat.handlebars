@@ -1,0 +1,23 @@
+<h1>
+ {{title}}
+</h1>
+<hr style="border-color:grey; border-width: 5px; height: 1px;" />
+
+<p>Listado de msgs:</p>
+<div id="div-msgs" style="border: 1px solid black;">
+  Loading...
+</div>
+<br /><br />
+<hr style="border-color: black; border-width: 5px; height: 1px;" />
+<div>
+  <p>Correo de usuario:</p>
+  <input id=" user-mail" type="text" placeholder="Escriba su correo" value="">
+  <p>Ingrese su msg:</p>
+  <input id="input-msg" type="text" placeholder="Participa aqui..." value="" />
+</div>
+<hr style="border-color: black; border-width: 5px; height: 1px;" />
+<span><small>{{timeStamp}}</small></span>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/test-chat.js"></script>

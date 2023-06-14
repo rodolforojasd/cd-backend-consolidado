@@ -8,9 +8,15 @@ import { __dirname } from "./utils.js"
 import { Server } from "socket.io"
 import { templateRouter } from "./routes/template.router.js"
 import { socketRouter } from "./routes/socket.router.js"
+import mongoose from "mongoose"
+
 
 console.log(__dirname)
 const PORT = 8080
+//mongodb+srv://rodolforojasd:hIhyr2dqKtKbh3LZ@cluster0.urthovq.mongodb.net/?retryWrites=true&w=majority
+
+
+
 
 const app = express()
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import {productManager} from '../ProductManager/ProductManager.js';
+import {productManager} from '../DAO/fileSystemManagers/ProductManager/ProductManager.js';
 import  uploader  from "../utils.js"
 
  const productsRouter = express.Router();
