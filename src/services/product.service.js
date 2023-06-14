@@ -7,7 +7,6 @@ class ProductService {
       {},
       {
         _id:true,
-        code:true,
         title:true,
         description:true,
         abv:true,
@@ -21,20 +20,20 @@ class ProductService {
     return products;
   }
 
-  async create({ code, title, description, abv, price, status, stock, category, thumbnail }) {
+  async create({  title, description, abv, price, status, stock, category, thumbnail }) {
     const productCreated = await ProductModel.create({
-        code, title, description, abv, price, status, stock, category, thumbnail
+         title, description, abv, price, status, stock, category, thumbnail
     });
     return productCreated;
   }
 
-  async updateOne({ _id, code, title, description, abv, price, status, stock, category, thumbnail }) {
+  async updateOne({ _id,  title, description, abv, price, status, stock, category, thumbnail }) {
     const productUptaded = await ProductModel.updateOne(
       {
         _id: _id,
       },
       {
-        code, title, description, abv, price, status, stock, category, thumbnail,
+         title, description, abv, price, status, stock, category, thumbnail,
       }
     );
     return productUptaded;

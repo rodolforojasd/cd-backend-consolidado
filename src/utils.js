@@ -21,11 +21,9 @@ const storage = multer.diskStorage({
 export const uploader = multer({ storage });
 
 
+import { connect, Schema, model } from 'mongoose';
 
-
-
-
-async function connectMongo(){
+export async function connectMongo(){
   try{
     await connect(
       MONGODB_51395
@@ -35,4 +33,21 @@ async function connectMongo(){
     console.log(e)
     throw "cannot connect to the db"
   }
+}
+
+
+
+import { Server } from 'socket.io';
+import { MessagelModel } from './DAO/models/messages.models';
+
+export function connectSocket(httpServer) {
+  const socketServer = new Server(httpServer);
+
+  socketServer.on('connection', (socket) => {
+    socket.on('msg_front_to_back', async (msg) => {
+      const messageCreated = await MessagelModel.create(msg);
+      const msgs = await MessagelModel.find({});
+      socketServer.emit('msg_back_to_front', msgs);
+    });
+  });
 }

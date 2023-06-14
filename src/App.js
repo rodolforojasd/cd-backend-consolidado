@@ -4,21 +4,21 @@ import productsRouter from "./routes/products.router.js"
 import cartsRouter from "./routes/carts.router.js"
 import handlebars from "express-handlebars"
 import path, { dirname } from "path"
-import { __dirname } from "./utils.js"
+import { __dirname, connectMongo  } from "./utils.js"
 import { Server } from "socket.io"
 import { templateRouter } from "./routes/template.router.js"
-import { socketRouter } from "./routes/socket.router.js"
-import mongoose from "mongoose"
+import { socketRouter } from "./routes/socket.chat.router.js"
+import { connectSocket } from "./utils.js"
 
 
-console.log(__dirname)
+
 const PORT = 8080
-//mongodb+srv://rodolforojasd:hIhyr2dqKtKbh3LZ@cluster0.urthovq.mongodb.net/?retryWrites=true&w=majority
-
-
-
 
 const app = express()
+
+connectMongo();
+
+connectSocket(httpServer);
 
 app.use(express.json())
 
@@ -36,22 +36,9 @@ const httpServer = app.listen(PORT, () => {
   console.log(`Example app listening http://localhost:${PORT}`)
 })
 
-const socketServer = new Server(httpServer)
-socketServer.on("connection", (socket) => {
-
-  setInterval(() => {
-    socket.emit("msg_back_front", {
-      msg: "Connection is on from back server! " + Date.now(),
-      from: "server",
-    })
-    socketServer.emit()
-  }, 1000)
 
 
-  socket.on("msg_front_back", (msg) => {
-    console.log(msg);
-  })
-})
+
 
 app.use("/products", productsRouter)
 
@@ -61,7 +48,7 @@ app.use("/carts",cartsRouter)
 app.use("/template-products", templateRouter)
 
 
-app.use("/test-socket", socketRouter)
+app.use("/chat", socketRouter)
 
 app.get("*", (req, res) => {
   return res

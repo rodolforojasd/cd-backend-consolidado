@@ -1,9 +1,12 @@
+
+//@ts-check
 import { Schema, model } from "mongoose";
 
-export const messageModel = model= (
-    "message",
-    new Schema({
-        message: { type: String, required: true, max: 100 },
-        user: { type: String, required: true, max: 100 },
-    })
-)
+
+const messageSchema = new Schema({
+    message: String,
+    user:String,
+})
+
+export const MessageModel = model('messages', messageSchema)
+
